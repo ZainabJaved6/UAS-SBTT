@@ -39,7 +39,6 @@ public class TestCaseExecutorAndRuntimeObs {
 	
 	public static void executeScenario(String s) throws InterruptedException
 	{
-		Main.runMultiCopter();
 		UAV Uav = new UAV(10003, 10004);
 		int id = 1;
 		double distToObsL1, distToObsL2, distToObsF1, distToObsF2;
@@ -121,28 +120,7 @@ public class TestCaseExecutorAndRuntimeObs {
         			}
     		}
         		
-        		if(turnRateF2>20 && turnRateF2<200 ) //can be > than 200 as well, not modifiying now, as other instances have been gene using 200 value
-        		{
-    				if(distToObsF2>=0 && distToObsF2<6)
-        			{
-    					follower2Drone.turnRate=turnRateF2;
-        			TimeUnit.SECONDS.sleep(1); //wait for 1 second and check again if the distance has increased or not
-        			 if(distToObsF2>=0 && distToObsF2<6) 
-	        			{follower2Drone.currentDistanceToObstacle=distToObsF1;
-	        			 if(Uav.uav.get_mode(3).equals("GUIDED") || Uav.uav.get_mode(3).equals("EQUALS") || Uav.uav.get_mode(3).equals("FOLLOW"))
-	        				{
-	        				 	follower2Drone.targetState = "FlyToWaypoint";
-	        					follower2Drone.currentGoal = "ExecuteMission";
-	        					ClassDiagramInstanceGenerator.saveInstance(Uav, missionID, instanceSavedAgainstTransition);
-
-	        					break;						        				
-	        				}
-	        			}
-	        			//else if (follower2.timetoWait!=0)
-	        				//targetState= "Wait";
-    				}
-    				
-        		}
+        		
         	/*	if((turnRateL>30 && turnRateL<200) && ((distToObsL1>=0 && distToObsL1<6) || (distToObsL2>=0 && distToObsL2<6)))
         			{
 	        			if(Uav.uav.get_mode(1)=="GUIDED" || Uav.uav.get_mode(1)=="AUTO" || Uav.uav.get_mode(1)=="FOLLOW")
@@ -214,24 +192,7 @@ public class TestCaseExecutorAndRuntimeObs {
     		 distToObsF1 = follower1Drone.getDistanceFromObstacle(follower1Drone.currentLatitude, follower1Drone.currentLongitude, leaderDrone.currentLatitude, leaderDrone.currentLongitude);
     		 distToObsF2 = follower2Drone.getDistanceFromObstacle(follower2Drone.currentLatitude, follower2Drone.currentLongitude, leaderDrone.currentLatitude, leaderDrone.currentLongitude);
     		
-    		 if(distToObsF1>0 && distToObsF1<6)
-    		 {
-    			 TimeUnit.SECONDS.sleep(2); //wait for 2 second and check again if the distance has increased or not
-    			 if(distToObsF1>0 && distToObsF1<6)
-        		 {follower1Drone.currentDistanceToObstacle=distToObsF1;
-    			 if(Uav.uav.get_mode(2).equals("GUIDED") || Uav.uav.get_mode(2).equals("EQUALS") || Uav.uav.get_mode(2).equals("FOLLOW"))
-    				{
-    				 follower1Drone.targetState = "FlyToWaypoint";
-    				 follower1Drone.currentGoal = "ExecuteMission"; //should be avoid collision
-
-    				 ClassDiagramInstanceGenerator.saveInstance(Uav, missionID, instanceSavedAgainstTransition);
-    				 	Uav.uav.write_parameter(1, "SIM_WIND_SPD", 0);
-	    				Uav.uav.write_parameter(2, "SIM_WIND_SPD", 0);
-	        			Uav.uav.write_parameter(3, "SIM_WIND_SPD", 0);
-    					break;
-    				}
-        		 }
-    		 }
+    		 
     		 else if (distToObsF2>0 && distToObsF2<6)
     		 {
     			 TimeUnit.SECONDS.sleep(2); //wait for 1 second and check again if the distance has increased or not
